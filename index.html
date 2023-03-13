@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/3b083c834f.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>task with comments</h1>
+
+        <div class="row">
+            <div class="row-item">
+                <form>
+                    <div class="form-group">
+                        <label for="comment-name">Имя пользователя</label>
+                        <input type="text" class="form-control" id="comment-name" placeholder="Введите имя:">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-body">Комментарий</label>
+                        <textarea class="form-control" id="comment-body"  rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-date">Дата</label>
+                        <input type="date" class="form-control" id="comment-date" placeholder="Введите дату:">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" id="comment-add" class="btn-add">Опубликовать</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row-item">
+                <div id="comment-field"></div>
+            </div>
+        </div>
+
+    </div>
+    <script src="./main.js"></script>
+</body>
+
+</html>
