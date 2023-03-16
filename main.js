@@ -1,38 +1,29 @@
 let comments = [];
 loadComments();
 
-const inputName = document.getElementById('comment-name');
+function addComments() {
 
-inputName.addEventListener("click", removeError);
-
-
-
-document.getElementById('comment-add').onclick = function (event) {
-    event.preventDefault();
     let commentName = document.getElementById('comment-name');
     let commentBody = document.getElementById('comment-body');
     let commentDate = document.getElementById('comment-date');
 
-    if (commentName.value === '') {
-        commentName.closest('.form-group').classList.add('error')
-        return false
-    }
-
     let comment = {
         name: commentName.value,
         body: commentBody.value,
-        time: commentDate.value === '' ? Date.now() : commentDate.value,
+        time: timeConverter(commentDate.value),
         id: Date.now(),
         btnLHart: false
     }
 
-    commentName.value = '';
-    commentBody.value = '';
-    commentDate.value = '';
     comments.push(comment);
+
     showComments();
     saveComments();
     addEvenListeners();
+
+    commentName.value = '';
+    commentBody.value = '';
+    commentDate.value = '';
 }
 
 function saveComments() {
@@ -52,18 +43,22 @@ function showComments() {
 
     comments.forEach(function (item) {
         out += `
-        <div class='comment'>
-            <div class='comment-head'>
-                <p class='user-name'><b>${item.name}</b></p>
-                <p class='comment-date'>${timeConverter(item.time)}</p>
-            </div>
-            <p class='comment-body'>${item.body}</p>
-            <div class='buttons'>
-                <button type='button' class='btn-trash' id='${item.id}'><i class="fa-solid fa-trash"></i></button>
-                <button type='button' class="btn-hart" id='${item.id}' style='color:${item.btnLHart ? 'red' : 'gray'}'><i class="fas fa-heart"></i></button>
-            </div>
+    <div class='comment'>
+        <div class='comment-head'>
+            <p class='user-name'><b>${item.name}</b></p>
+            <p class='comment-date'>${(item.time)}</p>
         </div>
-        `;
+        <p class='comment-body'>${item.body}</p>
+        <div class='buttons'>
+            <button type='button' class='btn-trash' id='${item.id}'>
+                <i class="fa-solid fa-trash"></i>
+            </button>
+            <button type='button' class="btn-hart" id='${item.id}' style='color:${item.btnLHart ? 'red' : 'gray'}'>
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </div>
+    `;
     });
     commentField.innerHTML = out;
 }
@@ -81,21 +76,27 @@ function addEvenListeners() {
     });
 }
 
-function timeConverter(time) {
+function timeConverter(timeInput) {
+    let dateComment;
+    let dateNow = new Date();
 
-    let dateComment = new Date(time);
-    let dateNow = new Date(Date.now());
-    
-    if (dateNow.getFullYear() === dateComment.getFullYear() && dateNow.getMonth() === dateComment.getMonth()){
-        if (dateNow.getDate() === dateComment.getDate()){
+    if (timeInput !== '') {
+        dateComment = new Date(timeInput)
+        dateComment.setHours(dateNow.getHours());
+        dateComment.setMinutes(dateNow.getMinutes());
+        dateComment.setSeconds(dateNow.getSeconds());
+    } else {
+        dateComment = new Date();
+    }
+
+    if (dateNow.getFullYear() === dateComment.getFullYear() && dateNow.getMonth() === dateComment.getMonth()) {
+        if (dateNow.getDate() === dateComment.getDate()) {
             return `сегодня, ${dateComment.getHours()}:${dateComment.getMinutes()}`
-        } else if (dateNow.getDate() === dateComment.getDate() + 1){
+        } else if (dateNow.getDate() === dateComment.getDate() + 1) {
             return `вчера, ${dateComment.getHours()}:${dateComment.getMinutes()}`
         }
     }
-    return `${dateComment.getFullYear()} ${dateComment.getMonth() + 1} ${dateComment.getDate()}, ${dateComment.getHours()}:${dateComment.getMinutes()}`
-
-
+    return `${dateComment.getFullYear()}.${dateComment.getMonth() + 1}.${dateComment.getDate()}, ${dateComment.getHours()}:${dateComment.getMinutes()}`
 }
 
 function removeComment(e) {
@@ -112,7 +113,6 @@ function removeComment(e) {
     localStorage.setItem('comments', JSON.stringify(comments));
 }
 
-
 function btnHartSwith(e) {
 
     let index = comments.findIndex(item => item.id === +(e.currentTarget.id));
@@ -125,8 +125,4 @@ function btnHartSwith(e) {
     showComments();
     addEvenListeners();
     saveComments();
-}
-
-function removeError(e) {
-    e.currentTarget.closest('.form-group').classList.remove('error');
 }

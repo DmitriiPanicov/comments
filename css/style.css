@@ -1,9 +1,16 @@
+body{
+    background-color: rgb(246, 248, 248);
+}
+
 .container{
     max-width: 1110px;
     margin: 0 auto;
 }
 
-
+*{
+    box-sizing: border-box;
+    font-family: 'Roboto Mono', monospace;
+}
 .row{
     display: flex;
     justify-content: space-between;
@@ -14,9 +21,10 @@
 }
 
 form{
-    background-color: #3967c284;
+    box-shadow: 5px 5px 15px rgba(89, 83, 83, 0.54), -5px -5px 15px rgba(89, 83, 83, 0.54);
     border-radius: 20px;
     padding: 20px 20px;
+    background-color: rgb(109, 157, 234);
 }
 
 .form-group{
@@ -46,8 +54,9 @@ label{
 .comment{
     display: flex;
     flex-direction: column;
+    background-color: rgb(109, 157, 234);
     row-gap: 10px;
-    background-color: rgba(79, 205, 37, 0.564);
+    box-shadow: 4px 4px 10px rgba(89, 83, 83, 0.54), -4px -4px 10px rgba(89, 83, 83, 0.54);
     border-radius: 20px;
     padding: 8px 20px;
 }
@@ -59,14 +68,6 @@ label{
 .comment-head{
     display: flex;
     justify-content: space-between;
-}
-
-.error::before{
-    content: 'Error';
-    color:red;
-    position: absolute;
-    bottom: 0;
-    left:170px;
 }
 
 p{
